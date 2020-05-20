@@ -33,4 +33,18 @@ class Validation
 	//--------------------------------------------------------------------
 	// Rules
 	//--------------------------------------------------------------------
+
+	public $melayu_deli = [
+		'kata'         => 'required',
+		'arti'       => 'required'
+	];
+	 
+	public $melayu_deli_errors = [
+		'kata'=> [
+			'required'  => 'Kata wajib diisi.'
+		],
+		'arti'=> [
+			'required'  => 'Arti wajib diisi.'
+		]
+	];
 }
