@@ -20,7 +20,8 @@ class MelayuDeli extends ResourceController{
     }
 
     public function show($kata = null){
-        $data = $this->model->getData($kata);
+        // $data = $this->model->getData($kata);
+        $data = $this->model->getId($kata);
 
         if ($data) {
             $response = [
@@ -53,13 +54,35 @@ class MelayuDeli extends ResourceController{
             'arti' => $arti
         ];
 
-        // Jika validasi gagal
-        if ($validation->run($data, 'melayu_deli') == false) {
-            $error_message = ['message' => 'The request was not completed'];
+        $save = $this->model->insertData($data);
+        // Jika berhasil menginputkan data ke database
+        if ($save) {
+            $message = ['message' => 'Created data successful'];
+            $response = [
+                'status' => 200,
+                'error' => false,
+                'data' => $message,
+            ];
+            return $this->respond($response, 200);
+        } else {
+            $message = ['message' => 'Created data didn\'t successful'];
             $response = [
                 'status' => 500,
                 'error' => true,
-                'data' => $error_message,
+                'data' => $message,
+            ];
+            return $this->respond($response, 400);
+        }
+
+        /*
+
+        // Jika validasi gagal
+        if ($validation->run($data, 'melayu_deli') == false) {
+            //$error_message = ['message' => 'The request was not completed'];
+            $response = [
+                'status' => 500,
+                'error' => true,
+                'data' => $validation->getErrors(),
             ];
             return $this->respond($response, 500);
         } else {
@@ -73,11 +96,16 @@ class MelayuDeli extends ResourceController{
                     'data' => $message,
                 ];
                 return $this->respond($response, 200);
+            } else {
+                $response = [
+                    'status' => 500,
+                    'error' => true,
+                    'data' => $validation->getErrors(),
+                ];
+                return $this->respond($response, 500);
             }
-        }
+        }*/
 
     }
 
 }
-
-?>

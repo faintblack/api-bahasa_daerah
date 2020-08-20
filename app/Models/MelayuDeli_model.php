@@ -6,7 +6,12 @@ use CodeIgniter\Model;
 class MelayuDeli_model extends Model{
 
     protected $table = 'melayu_deli';
+    protected $primaryKey = 'id_kata';
     protected $allowedFields = ['kata', 'arti'];
+
+    public function getId($id){
+        return $this->find($id);
+    }
     
     public function getData($kata = false){
         if ($kata == false) {
